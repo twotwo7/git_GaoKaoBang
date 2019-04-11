@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:gaokaobang/mainpage.dart';
 void main() {
-    //debugPaintSizeEnabled = true;
+    debugPaintSizeEnabled = false;
     runApp(new MyApp());
     SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(statusBarColor:Colors.transparent);
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);

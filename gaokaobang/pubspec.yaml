@@ -28,6 +28,8 @@ dependencies:
   http: ^0.12.0+1
   gbk2utf8: ^1.0.1
   flutter_webview_plugin: ^0.2.1+2
+  dio: 2.1.0
+  cookie_jar: ^1.0.0
 
 
 dev_dependencies:
@@ -51,6 +53,11 @@ flutter:
   #  - images/a_dot_ham.jpeg
   assets:
     - images/
+    - images/search.png
+    - images/building.png
+    - images/test.png
+    - images/book.png
+    - data/2017allData_haveid.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
 

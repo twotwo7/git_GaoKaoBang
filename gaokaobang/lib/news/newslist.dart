@@ -16,10 +16,13 @@ class getHomeList extends StatefulWidget {
 class getHomeListState extends State<getHomeList> {
   List<OneNew> newsList = new List();
   final _biggerFont = const TextStyle(fontSize: 18.0);
-  var page = 1;
+  var page=1;
+  bool isReadyDownLoad=true;
   @override
   void initState() {
-    findnewsList(page++);
+    var url="http://www.gaokao.com/baokao/yxdq/gkxxs/index.shtml";
+    page++;
+    findnewsList(url);
   }
   @override
   Widget build(BuildContext context) {
@@ -35,26 +38,37 @@ class getHomeListState extends State<getHomeList> {
     );
   }
   Widget _buildSuggestions() {
-    return new ListView.builder(
-      padding: const EdgeInsets.all(0),
-      itemBuilder: (context, i) {
-        if (i == 0) return new CountDownPage();
-        //分割线
-        if (i.isOdd) return new Divider();
+    if (newsList.isEmpty) {
+      return new Center(child: new CircularProgressIndicator());
+    } else {
+      return new ListView.builder(
+        padding: const EdgeInsets.all(0),
+        itemBuilder: (context, i) {
+          if (i == 0) return new CountDownPage();
+          //分割线
+          if (i.isOdd) return new Divider();
 
-        final index = i ~/ 2;
-        if (index >= newsList.length-50 && page < 100) {
-          //滑倒底了
-          findnewsList(page++);
-          findnewsList(page++);
-        }
-        try{
-          return _buildRow(newsList.elementAt(index));
-        }catch(e){
-          return _buildRow(new OneNew("nothing", "XXXXXXXXXXXXXXXXX", " "));
-        }
-      },
-    );
+          final index = i ~/ 2;
+          if (index >= newsList.length && page < 100&&newsList.length>=10&&isReadyDownLoad) {
+            //滑倒底了
+            print(newsList.length);
+            isReadyDownLoad=false;
+            var url;
+            if(page==1){url="http://www.gaokao.com/baokao/yxdq/gkxxs/index.shtml";}
+            else{ url="http://www.gaokao.com/baokao/yxdq/gkxxs/index_"+page.toString()+".shtml";}
+            print("page:"+page.toString());
+            page++;
+            findnewsList(url);
+          }
+          try{
+            return _buildRow(newsList.elementAt(index-1));
+          }catch(e){
+            return _buildRow(new OneNew("nothing", "XXXXXXXXXXXXXXXXX", " "));
+          }
+        },
+      );
+    }
+
   }
   Widget _buildRow(OneNew news) {
     return new ListTile(
@@ -79,14 +93,12 @@ class getHomeListState extends State<getHomeList> {
         new MaterialPageRoute(
             builder: (context) => new NewsWebPage(onenew.url, onenew.title)));
   }
-  findnewsList(int page) async {
+  findnewsList(String url) async {
     try {
-      var url;
-      if(page==1)url="http://www.gaokao.com/baokao/yxdq/gkxxs/index.shtml";
-      else url="http://www.gaokao.com/baokao/yxdq/gkxxs/index_"+page.toString()+".shtml";
       http.Response response = await http.get(url);
       //此处的data为新闻列表的完整html
       String data = gbk.decode(response.bodyBytes);
+      //print(data);
       //直接用字符串切割获得新闻的List
       List<String> tempList = data.split('<h2 class="h2_tit">');
       tempList.removeLast();
@@ -100,20 +112,21 @@ class getHomeListState extends State<getHomeList> {
           one.url = "http://m"+onestr.split('<a href="http://www').elementAt(1)
               .split('" target="_blank"')
               .elementAt(0);
-
           one.title = onestr.split('target="_blank" title="').elementAt(1)
               .split('">')
               .elementAt(0);
           one.date =
               onestr.split('<span>').elementAt(1).split('</span>').elementAt(0);
           newsList.add(one);
+          //print(one.toString());
         }
       });
-
       //print(_text);
     } catch (e) {
       //网络出问题了！
+      print("ERROR：获取新闻列表"+e.toString());
     }
+    isReadyDownLoad=true;
   }
 }
 class NewsWebPage extends StatefulWidget{
@@ -207,8 +220,8 @@ class NewsWebPageState extends State<NewsWebPage>{
  for (var i = 0; i<divset.length;i++) {
    divset[i].style.display="none";
  };*/
-      withZoom: true,  // 允许网页缩放
-      withLocalStorage: true, // 允许LocalStorage
+      withZoom: false,  // 允许网页缩放
+      withLocalStorage: false, // 允许LocalStorage
       withJavascript: false, // 允许执行js代码
     );
   }
