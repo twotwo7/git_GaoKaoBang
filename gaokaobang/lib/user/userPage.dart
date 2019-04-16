@@ -18,22 +18,21 @@ class Page extends State<userPage> {
   Widget layout(BuildContext context) {
     return new Scaffold(
       appBar: buildAppBar(context),
-      body: new ListView(
+      body: new Column(
         children: <Widget>[
-          new Text("这里是我的页面"),
+          new Container(),
         ],
       ),
     );
   }
 
   Widget buildAppBar(BuildContext context) {
-    return new AppBar(title: const Text('我的'));
+    return new AppBar(title: const Text('我的'),);
   }
 
   Widget header(BuildContext context) {
     return new Image.network(
       'http://i2.yeyou.itc.cn/2014/huoying/hd_20140925/hyimage06.jpg',
-
     );
   }
 }

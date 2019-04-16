@@ -6,13 +6,17 @@ import 'dart:ui';
 import 'dart:convert';
 
 import 'package:gaokaobang/tools/tools.dart';
-List<List> chips_show=[["科","物理"],["科","生物"],["科","化学"],["学","河北工业大学"],["专","工程"],["分","600"],["差","50"]];
+//List<List> chips_show=[["科",""],["科",""],["科",""],["学",""],["专",""],["分",""],["差",""]];
 //List<List> chips_show=[];
-String yaoqiu_id="111000";
-const chipwidth = 80.0;
-const chipheight = 60.0;
+
+//const chipwidth = 80.0;
+//const chipheight = 60.0;
+//List<Map> _suggestions=new List();
+
 List<Map> _suggestions=new List();
+//这个list存着待查找的数据
 List<Map> major_map_list=new List();
+
 
 class CollegeScreen extends StatefulWidget{
   @override
@@ -20,77 +24,71 @@ class CollegeScreen extends StatefulWidget{
 }
 
 class CollegeScreenState extends State<CollegeScreen> {
-
+  void _update() {
+    //通知刷新
+    setState(() {
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      _suggestions=_suggestions;
-      chips_show=chips_show;
-    });
     return new Scaffold(
+        resizeToAvoidBottomPadding: false, //输入框抵住键盘 内容不随键盘滚动
         appBar: new AppBar(
           elevation: 1,
           title: new Text('高校推荐'),
           actions: <Widget>[
-            new IconButton(icon: new Icon(Icons.list), onPressed:(){ _EditPress(context);}),
+            //new IconButton(icon: new Icon(Icons.list), onPressed: () {
+            //  _EditPress(context);
+            //}),
           ],
-          backgroundColor: Colors.blue,
+          //backgroundColor: Colors.blue,
         ),
-        body: new Container(
-          child: new Column(
-            children: <Widget>[
-              new Container(
-                  color: Colors.blue,
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
-                  height: 120,
-                  child:new Opacity(
-                      opacity: 0.8,
-                      child: new ListView(
-                    //padding: EdgeInsets.only(top:10),
-                    children: <Widget>[
-                      new Container(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width,
-                        height: 200,
-                        child: new MyChip(),
+        body: new SingleChildScrollView(
+          child: new Container(
+            child: new Column(
+              children: <Widget>[
+                //搜索框
+                new Card(
+                  child: new Container(
+                    //color: Colors.blue,
+                    width: MediaQuery.of(context).size.width,
+                    height: 220,
+                    child: new SearchInputView(_update),
+                  ),
+                ),
+                new Card(
+                  child:new Container(
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width,
+                    height: MediaQuery
+                        .of(context)
+                        .size
+                        .height - 326,
+                    child: new ResultList(),
+                  ) ,
+                ),
+                //搜索结果列表
 
-                      )
-
-                    ],
-                  ) )//,
-
-              ),
-              new Container(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height - 210,
-                child: new ResultList(),
-              )
-            ],
+              ],
+            ),
           ),
         )
 
+
     );
   }
+
   //点击编辑框
-  _EditPress(BuildContext context) async {
+  /*_EditPress(BuildContext context) async {
     /*var result = await Navigator.push(context,
         new MaterialPageRoute(builder: (context) {
           return new MyDialog();
         }));
     setState(() {
     });*/
-    List<Object>result=await showDialog<List>(
+    List<Object>result = await showDialog<List>(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
@@ -98,13 +96,376 @@ class CollegeScreenState extends State<CollegeScreen> {
         }
     );
     setState(() {
-      _suggestions=_suggestions;
-      chips_show=chips_show;
+      _suggestions = _suggestions;
+      chips_show = chips_show;
     });
-  }
-
+  }*/
 }
-class MyDialog extends StatefulWidget{
+
+class SearchInputView extends StatefulWidget {
+  final Function update;
+  SearchInputView(this.update);
+  @override
+  createState() => new SearchInputViewState(update);
+}
+class SearchInputViewState extends State<SearchInputView> {
+  String yaoqiu_id;
+  List<bool> Checks = [false, false, false, false, false, false];
+  List<String> Check_name = ["物理", "化学", "生物", "地理", "生物", "政治"];
+  String schoolnamestr = "";
+  String specialnamestr = "";
+  String scorestr = "";
+  String rangestr = "";
+  // 声明一个方法成员方法
+
+  final Function update;
+
+  //保存传递来方法(引用)
+
+  SearchInputViewState(this.update);
+
+  @override
+  Widget build(BuildContext context) {
+    return new Column(
+      children: <Widget>[
+        //科目复选框
+        new Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children:<Widget>[
+            new Text("科目:"),
+            new Container(width: 50,),
+            new Column(
+              textDirection: TextDirection.ltr,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+
+                new Row(
+                  children: <Widget>[
+                    new Checkbox(
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      value: Checks[0],
+                      onChanged: (bool value) {
+                        setState(() {
+                          Checks[0] = !Checks[0];
+                        });
+                      },
+                    ),
+                    new Text("物理"),
+                    new Checkbox(
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      value: Checks[1],
+                      onChanged: (bool value) {
+                        setState(() {
+                          Checks[1] = !Checks[1];
+                        });
+                      },
+                    ),
+                    new Text("化学"),
+                    new Checkbox(
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      value: Checks[2],
+                      onChanged: (bool value) {
+                        setState(() {
+                          Checks[2] = !Checks[2];
+                        });
+                      },
+                    ),
+                    new Text("生物"),
+                  ],
+                ),
+                new Row(
+                  children: <Widget>[
+                    new Checkbox(
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      value: Checks[3],
+                      onChanged: (bool value) {
+                        setState(() {
+                          Checks[3] = !Checks[3];
+                        });
+                      },
+                    ),
+                    new Text("地理"),
+                    new Checkbox(
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      value: Checks[4],
+                      onChanged: (bool value) {
+                        setState(() {
+                          Checks[4] = !Checks[4];
+                        });
+                      },
+                    ),
+                    new Text("历史"),
+                    new Checkbox(
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      value: Checks[5],
+                      onChanged: (bool value) {
+                        setState(() {
+                          Checks[5] = !Checks[5];
+                        });
+                      },
+                    ),
+                    new Text("政治"),
+                  ],
+                )
+              ],
+            ),
+          ],
+        ),
+        new Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            //大学名字输入
+            new Container(
+              child: new Row(
+                children: <Widget>[
+                  new Text("大学："),
+                  new Container(
+                    width: 100,
+                    child: new TextField(
+                      maxLines: 1,
+                      //maxLength: 10,
+                      onChanged: (String value) {
+                        setState(() {
+                          schoolnamestr = value;
+                        });
+                      },
+                    ),
+                  )
+                  //new TextField(),
+                ],
+              ),
+            ),
+            //专业课名字输入
+            new Container(
+              child: new Row(
+                children: <Widget>[
+                  new Text("专业："),
+                  new Container(
+                    width: 100,
+                    child: new TextField(
+                      maxLines: 1,
+                      //maxLength: 10,
+                      onChanged: (String value) {
+                        setState(() {
+                          specialnamestr = value;
+                        });
+                      },
+                    ),
+
+                  )
+                  //new TextField(),
+                ],
+              ),
+            ),
+          ],
+        ),
+        new Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          textDirection: TextDirection.ltr,
+          children: <Widget>[
+            //分数输入
+            new Container(
+              child: new Row(
+                children: <Widget>[
+                  new Text("分数："),
+                  new Container(
+                    width: 100,
+                    child: new TextField(
+                      maxLines: 1,
+                      //maxLength: 10,
+                      onChanged: (String value) {
+                        setState(() {
+                          if (value == "") {
+                            scorestr = "0";
+                          } else {
+                            scorestr = value;
+                          }
+                        });
+                      },
+                    ),
+                  )
+                  //new TextField(),
+                ],
+              ),
+            ),
+            //分差输入
+            new Container(
+              child: new Row(
+                children: <Widget>[
+                  new Text("分差："),
+                  new Container(
+                    width: 100,
+                    child: new TextField(
+                      maxLines: 1,
+                      //maxLength: 10,
+                      onChanged: (String value) {
+                        setState(() {
+                          if (value == "") {
+                            rangestr = "0";
+                          } else {
+                            rangestr = value;
+                          }
+                        });
+                      },
+                    ),
+                  )
+                  //new TextField(),
+                ],
+              ),
+            ),
+          ],
+        ),
+        //搜索按钮
+        new MaterialButton(
+          shape: RoundedRectangleBorder(
+              side: BorderSide.none,
+              borderRadius: BorderRadius.all(Radius.circular(20))),
+          color: Colors.blue,
+          textColor: Colors.white,
+          child: new Text('点击立即查询高校'),
+          onPressed: () {
+            //Navigator.of(context).pop();
+            //chips_show=[];
+            clickSearch();
+            setState(() {
+              update();
+            });
+          },
+        )
+      ],
+    );
+  }
+  void clickSearch(){
+    yaoqiu_id="";
+    for(int i=0;i<Checks.length;i++){
+      if(Checks[i]==true){
+        //chips_show.add(['科',Check_name[i]]);
+        yaoqiu_id+="1";
+      }else{yaoqiu_id+="0";}
+    }
+    //chips_show.add(['专',specialnamestr]);
+    //chips_show.add(['学',schoolnamestr]);
+    //chips_show.add(['分',scorestr]);
+    //chips_show.add(['差',rangestr]);
+    /*print(chips_show);
+                  for (int i = 0; i < chips_show.length; i++) {
+                    if (chips_show[i][0] == "专") {
+                      specialtyname = chips_show[i][1];
+                    }
+                    else if (chips_show[i][0] == "学") {
+                      schoolname = chips_show[i][1];
+                    }
+                    else if (chips_show[i][0] == "分") {
+                      try {
+                        score = int.parse(chips_show[i][1]);
+                      } catch (e) {
+                        score = 0;
+                      }
+                    }
+                    else if (chips_show[i][0] == "差") {
+                      try {
+                        range = int.parse(chips_show[i][1]);
+                      } catch (e) {
+                        range = 0;
+                      }
+                    }
+                  }*/
+    //return major_map_list;
+    List<Map> results = new List();
+    int scoreint=0;
+    int rangeint=0;
+    try{scoreint=int.parse(scorestr);}catch(e){scoreint=0;}
+    try{rangeint=int.parse(rangestr);}catch(e){rangeint=0;}
+    for (int i = 0; i < major_map_list.length; i++) {
+      if (compareSCORE(scoreint, major_map_list[i]['var'], rangeint) &&
+          compareSPECIALTYNAME(
+              specialnamestr, major_map_list[i]['specialtyname']) &&
+          compareYAOQIU(yaoqiu_id, major_map_list[i]['yaoqiu_id']) &&
+          compareSCHOOLNAME(schoolnamestr, major_map_list[i]['schoolname'])) {
+        results.add(major_map_list[i]);
+      }
+    }
+    print(yaoqiu_id);
+    print(_suggestions.length);
+    _suggestions = results;
+  }
+  //将字符串转化成二进制数代表的int
+  int str2byte(String str){
+    int ans=0;
+    int k=1;
+    for(int i=str.length-1;i>-1;i--,k*=2){
+      if(str[i]=="1"){
+        ans=ans+k;
+      }
+    }
+    return ans;
+  }
+  //输入：用户的yaoqiu_id，数据中的id
+  bool compareYAOQIU(String user,String data){
+    if(user==""||user=="000000")return true;
+    bool result=false;
+    int userint=str2byte(user);
+    int dataint=str2byte(data.substring(1,7));
+    if(data[0]=="1"){
+      //必选，与之后必须等于原数
+      if(dataint<=dataint&userint){
+        //成功匹配
+        return true;
+      }else{
+        return false;
+      }
+    }else if(data[0]=="0"){
+      //选至少一项,与之后大于1
+      if(dataint&userint>0){
+        //成功匹配
+        return true;
+      }else{
+        return false;
+      }
+    }else{
+      //没有要求
+      return true;
+    }
+
+  }
+  bool compareSCHOOLNAME(String user,String data){
+    if(user=="")return true;
+    int data_len=data.length;
+    int user_len=user.length;
+    for(int i=0;i<data_len-user_len+1;i++){
+      if(user==data.substring(i,user_len+i)){
+        return true;
+      }
+    }
+    return false;
+  }
+  bool compareSPECIALTYNAME(String user,String data){
+    if(user=="")return true;
+    int data_len=data.length;
+    int user_len=user.length;
+    for(int i=0;i<data_len-user_len+1;i++){
+      if(user==data.substring(i,user_len+i)){
+        return true;
+      }
+    }
+    return false;
+  }
+  bool compareSCORE(int user,String data,int range){
+    if(user==0||range==0)return true;
+    int dataint=int.parse(data);
+    try{
+      if(user<=dataint+range&&user>=dataint-range){
+        return true;
+      }
+    }catch(e){
+      return false;
+    }
+
+    return false;
+  }
+}
+/*class MyDialog extends StatefulWidget{
   @override
   createState() => new MyDialogState();
 }
@@ -120,9 +481,9 @@ class MyDialogState extends State<MyDialog>{
     return /*Text(newsList.elementAt(0).toString());*/
       new Scaffold(
         backgroundColor: Colors.transparent,
-        body:Opacity(opacity: 1,child: new AlertDialog(
-          title: new Text('筛选条件'),
-          content: new SingleChildScrollView(
+        body:Opacity(opacity: 1,child: new Container(
+          //title: new Text('筛选条件'),
+          child: new Container(
             child: new Column(
               children: <Widget>[
                 //科目复选框
@@ -301,7 +662,7 @@ class MyDialogState extends State<MyDialog>{
               ],
             ),
           ),
-          actions: <Widget>[
+          /*actions: <Widget>[
             new FlatButton(
               child: new Text('确定'),
               onPressed: () {
@@ -364,7 +725,7 @@ class MyDialogState extends State<MyDialog>{
                 });
               },
             ),
-          ],
+          ],*/
         ),)
       );
   }
@@ -442,9 +803,8 @@ class MyDialogState extends State<MyDialog>{
 
     return false;
   }
-
-}
-class MyChip extends StatefulWidget{
+}*/
+/*class MyChip extends StatefulWidget{
   MyChip({Key key, this.bActive: false, this.onChanged}) : super(key: key);
   final bActive;
   final ValueChanged<bool> onChanged;
@@ -627,8 +987,8 @@ class MyChipState extends State<MyChip>{
 
     return false;
   }
-}
-class TestFlowDelegate extends FlowDelegate {
+}*/
+/*class TestFlowDelegate extends FlowDelegate {
   EdgeInsets margin = EdgeInsets.all(0);
   TestFlowDelegate({this.margin});
   @override
@@ -656,12 +1016,13 @@ class TestFlowDelegate extends FlowDelegate {
   bool shouldRepaint(FlowDelegate oldDelegate) {
     return oldDelegate != this;
   }
-}
+}*/
 class ResultList extends StatefulWidget {
   @override
   createState() => new ResultListState();
 }
 class ResultListState extends State<ResultList> {
+
   String schoolname="";
   String specialtyname="";
   int times=0;
@@ -678,7 +1039,7 @@ class ResultListState extends State<ResultList> {
   @override
   void initState() {
     init();
-    search();
+    //search();
   }
   Widget _buildSuggestions() {
     if (_suggestions.isEmpty) {
@@ -751,8 +1112,13 @@ class ResultListState extends State<ResultList> {
     });
 
   }
+  update(){
+    setState(() {
+
+    });
+  }
   //输入：科目id(6位)，学校名，专业名，分数,分数范围
-  Future<List> search () async{
+  /*Future<List> search () async{
     for(int i=0;i<chips_show.length;i++){
       if(chips_show[i][0]=="专"){
         specialtyname=chips_show[i][1];
@@ -864,5 +1230,5 @@ class ResultListState extends State<ResultList> {
     }
 
     return false;
-  }
+  }*/
 }

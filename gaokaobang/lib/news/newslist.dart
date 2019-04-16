@@ -95,6 +95,7 @@ class getHomeListState extends State<getHomeList> {
   }
   findnewsList(String url) async {
     try {
+
       http.Response response = await http.get(url);
       //此处的data为新闻列表的完整html
       String data = gbk.decode(response.bodyBytes);
@@ -108,8 +109,9 @@ class getHomeListState extends State<getHomeList> {
         for (int i = 0; i < tempList.length; i++) {
           onestr = tempList.elementAt(i);
           //print(onestr);
+          //url="http://112.74.39.182:5001/clickNew?url="+url;
           var one = new OneNew("url error", "title error", "date error");
-          one.url = "http://m"+onestr.split('<a href="http://www').elementAt(1)
+          one.url = "http://112.74.39.182:5001/clickNew?url=http://m"+onestr.split('<a href="http://www').elementAt(1)
               .split('" target="_blank"')
               .elementAt(0);
           one.title = onestr.split('target="_blank" title="').elementAt(1)
