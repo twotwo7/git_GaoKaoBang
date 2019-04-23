@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:gaokaobang/find/College.dart';
 import 'package:gaokaobang/find/NoteScreen.dart';
 import 'package:gaokaobang/find/SearchScreen.dart';
@@ -30,7 +31,7 @@ class Page extends State<findPage> {
           padding: const EdgeInsets.all(0),
           child: new Column(
             children: <Widget>[
-              new Container(
+              /*new Container(
                 padding: new EdgeInsets.all(20),
                 color: Colors.green,
                 //height: MediaQuery.of(context).size.height * (1.2 / 5.0),
@@ -48,12 +49,10 @@ class Page extends State<findPage> {
                     ),*/
                   ],
                 ),
-              ),
+              ),*/
               new morePage(),
             ],
-          )
-
-      ),
+          )),
     );
   }
 
@@ -63,25 +62,29 @@ class Page extends State<findPage> {
 }
 
 //
-class morePage extends StatefulWidget{
+class morePage extends StatefulWidget {
   @override
   createState() => new morePageState();
 }
+
 class morePageState extends State<morePage> {
-  clickSearch() {
+  clickZiZhu() {
     print("S");
     Navigator.push(
       context,
       new MaterialPageRoute(builder: (context) => new SearchScreen()),
     );
   }
+
   clickTest() {
     print("T");
     Navigator.push(
       context,
       new MaterialPageRoute(builder: (context) => new TestScreen()),
     );
+
   }
+
   clickNote() {
     print("N");
     Navigator.push(
@@ -89,6 +92,7 @@ class morePageState extends State<morePage> {
       new MaterialPageRoute(builder: (context) => new NoteScreen()),
     );
   }
+
   clickCollege() {
     print("C");
     Navigator.push(
@@ -96,18 +100,25 @@ class morePageState extends State<morePage> {
       new MaterialPageRoute(builder: (context) => new CollegeScreen()),
     );
   }
+
   @override
   Widget build(BuildContext context) {
+    var cardHighet = MediaQuery
+        .of(context)
+        .size
+        .height - 40;
+    var cardWidth = MediaQuery
+        .of(context)
+        .size
+        .width;
     return new Container(
-        margin: new EdgeInsets.fromLTRB(10, 0,10, 0),
-      //color: Colors.greenAccent,
         width: MediaQuery
             .of(context)
             .size
             .width,
         child: Column(
           children: <Widget>[
-            new Row(
+            /* new Row(
               children: <Widget>[
                 new Column(
                   children: <Widget>[
@@ -333,10 +344,170 @@ class morePageState extends State<morePage> {
                 )
 
               ],
-            ),
+            ),*/
+            //高校查询
+            new Card(
+                elevation: 10,
+                //color: Colors.green,
+                child: new MaterialButton(
+                  minWidth: cardWidth,
+                  height: cardHighet / 6,
+                  onPressed: clickCollege,
+                  child: new Container(
+                    width: cardWidth,
+                    height: cardHighet / 6,
+                    child: new Row(
+                      children: <Widget>[
+                        //图标
+                        Expanded(
+                          child: Container(
+                            //color: Colors.red,
+                            padding: EdgeInsets.all(5.0),
+                            child: new Image.asset("images/search.png"),
+                          ),
+                          flex: 1,
+                        ),
+                        //文字
+                        Expanded(
+                          child: Center(
+                            child: Container(
+                              //color: Colors.yellow,
+                              padding: EdgeInsets.all(5.0),
+                              child: new Text("高校查询",
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 30.0,
+                                      fontWeight: FontWeight.w700)),
+                            ),
+                          ),
+                          flex: 2,
+                        ),
+                      ],
+                    ),
+                  ),
+                )),
+            //自主招生
+            new Card(
+                elevation: 10,
+                //color: Colors.green,
+                child: new MaterialButton(
+                    minWidth: cardWidth,
+                    height: cardHighet / 6,
+                    onPressed: clickZiZhu,
+                    child: new Container(
+                      width: cardWidth,
+                      height: cardHighet / 6,
+                      child: new Row(
+                        children: <Widget>[
+                          //图标
+                          Expanded(
+                            child: Container(
+                              //color: Colors.red,
+                              padding: EdgeInsets.all(5.0),
+                              child: new Image.asset("images/building.png"),
+                            ),
+                            flex: 1,
+                          ),
+                          //文字
+                          Expanded(
+                            child: Center(
+                              child: Container(
+                                //color: Colors.yellow,
+                                padding: EdgeInsets.all(5.0),
+                                child: new Text("自主招生",
+                                    style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 30.0,
+                                        fontWeight: FontWeight.w700)),
+                              ),
+                            ),
+                            flex: 2,
+                          ),
+                        ],
+                      ),
+                    ))),
+            //性格测试
+            new Card(
+                elevation: 10,
+                //color: Colors.green,
+                child: new MaterialButton(
+                    minWidth: cardWidth,
+                    height: cardHighet / 6,
+                    onPressed: clickTest,
+                    child: new Container(
+                      width: cardWidth,
+                      height: cardHighet / 6,
+                      child: new Row(
+                        children: <Widget>[
+                          //图标
+                          Expanded(
+                            child: Container(
+                              //color: Colors.red,
+                              padding: EdgeInsets.all(5.0),
+                              child: new Image.asset("images/test.png"),
+                            ),
+                            flex: 1,
+                          ),
+                          //文字
+                          Expanded(
+                            child: Center(
+                              child: Container(
+                                //color: Colors.yellow,
+                                padding: EdgeInsets.all(5.0),
+                                child: new Text("性格测试",
+                                    style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 30.0,
+                                        fontWeight: FontWeight.w700)),
+                              ),
+                            ),
+                            flex: 2,
+                          ),
+                        ],
+                      ),
+                    ))),
+            //高考须知
+            new Card(
+              elevation: 10,
+              //color: Colors.green,
+              child: new MaterialButton(
+                  minWidth: cardWidth,
+                  height: cardHighet / 6,
+                  onPressed: clickNote,
+                  child: new Container(
+                    width: cardWidth,
+                    height: cardHighet / 6,
+                    child: new Row(
+                      children: <Widget>[
+                        //图标
+                        Expanded(
+                          child: Container(
+                            //color: Colors.red,
+                            padding: EdgeInsets.all(5.0),
+                            child: new Image.asset("images/book.png"),
+                          ),
+                          flex: 1,
+                        ),
+                        //文字
+                        Expanded(
+                          child: Center(
+                            child: Container(
+                              //color: Colors.yellow,
+                              padding: EdgeInsets.all(5.0),
+                              child: new Text("高考须知",
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 30.0,
+                                      fontWeight: FontWeight.w700)),
+                            ),
+                          ),
+                          flex: 2,
+                        ),
+                      ],
+                    ),
+                  )),
+            )
           ],
-        )
-
-    );
+        ));
   }
 }
