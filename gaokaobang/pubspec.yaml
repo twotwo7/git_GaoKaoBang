@@ -30,6 +30,7 @@ dependencies:
   flutter_webview_plugin: ^0.2.1+2
   dio: 2.1.0
   cookie_jar: ^1.0.0
+  sqflite: any
 
 
 dev_dependencies:
