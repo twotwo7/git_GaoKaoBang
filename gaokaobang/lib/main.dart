@@ -12,7 +12,7 @@ void main() {
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
 }
 class MyApp extends StatelessWidget {
-  void sqldemo() async{
+  /*void sqldemo() async{
     SqlHelper sqlhelper=new SqlHelper();
     var databasesPath = await getDatabasesPath();
     String path = join(databasesPath, 'demo.db');
@@ -33,10 +33,10 @@ class MyApp extends StatelessWidget {
     print(list);
 
     sqlhelper.close();
-  }
+  }*/
   @override
   Widget build(BuildContext context) {
-    sqldemo();
+    //sqldemo();
     return new MaterialApp(
       title: '高考帮',
       theme: new ThemeData(

@@ -4,6 +4,7 @@ import 'package:gaokaobang/find/College.dart';
 import 'package:gaokaobang/find/NoteScreen.dart';
 import 'package:gaokaobang/find/SearchScreen.dart';
 import 'package:gaokaobang/find/TestScreen.dart';
+import 'package:gaokaobang/find/ZizhuScreen.dart';
 
 class findPage extends StatefulWidget {
   @override
@@ -69,10 +70,10 @@ class morePage extends StatefulWidget {
 
 class morePageState extends State<morePage> {
   clickZiZhu() {
-    print("S");
+    print("Z");
     Navigator.push(
       context,
-      new MaterialPageRoute(builder: (context) => new SearchScreen()),
+      new MaterialPageRoute(builder: (context) => new ZizhuScreen()),
     );
   }
 

@@ -8,7 +8,19 @@ import 'package:http/http.dart' as http;
 import 'package:gbk2utf8/gbk2utf8.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:gaokaobang/tools/SqlHelper.dart';
 
+/*SqlHelper sqlhelper=new SqlHelper();
+String path="";
+String tablename='News';
+void initsql() async{
+  var databasesPath = await getDatabasesPath();
+  path = join(databasesPath, 'history.db');
+  String SqlCreate='CREATE TABLE IF NOT EXISTS News (id INTEGER PRIMARY KEY, url TEXT, title TEXT, date TEXT)';
+  await sqlhelper.create(path, SqlCreate);
+}*/
 class getHomeList extends StatefulWidget {
   @override
   createState() => new getHomeListState();
@@ -27,6 +39,7 @@ class getHomeListState extends State<getHomeList> {
   @override
   Widget build(BuildContext context) {
     //init();
+    //initsql();
     return /*Text(newsList.elementAt(0).toString());*/
     new Scaffold(
       appBar: new AppBar(
@@ -87,19 +100,45 @@ class getHomeListState extends State<getHomeList> {
     );
   }
   void clicknews(OneNew onenew) {
+    /*var valuesmap = <String, dynamic>{
+      'url': onenew.url,
+      'title': onenew.title,
+      'date':onenew.date,
+    };
+    sqlhelper.insert(path,tablename, valuesmap);*/
     print(onenew.url);
+    DateTime now = new DateTime.now();
+    String date = now.toString().substring(0,10);
+    initsql(onenew.url, onenew.title,date);
     Navigator.push(
-        context,
+        this.context,
         new MaterialPageRoute(
-            builder: (context) => new NewsWebPage(onenew.url, onenew.title)));
+            builder: (context) => new NewsWebPage(onenew.url, onenew.title))
+    );
+  }
+  void initsql(String url,String title,String date) async{
+    SqlHelper sqlhelper=new SqlHelper();
+    var databasesPath = await getDatabasesPath();
+    String path = join(databasesPath, 'history.db');
+    String SqlCreate='CREATE TABLE IF NOT EXISTS News (id INTEGER PRIMARY KEY, url TEXT, title TEXT, date TEXT)';
+    await sqlhelper.open(path, SqlCreate);
+    String tablename='News';
+    var valuesmap = <String, dynamic>{
+      'url': url,
+      'title': title,
+      'date':date,
+    };
+    //String Sqlfind = 'select * from News where ';
+    int id=await sqlhelper.insert(path,tablename,valuesmap);
+    sqlhelper.close();
+    print(id);
   }
   findnewsList(String url) async {
     try {
-
       http.Response response = await http.get(url);
       //此处的data为新闻列表的完整html
       String data = gbk.decode(response.bodyBytes);
-      //print(data);
+      print(data);
       //直接用字符串切割获得新闻的List
       List<String> tempList = data.split('<h2 class="h2_tit">');
       tempList.removeLast();
@@ -114,6 +153,7 @@ class getHomeListState extends State<getHomeList> {
           one.url = "http://112.74.39.182:5001/clickNew?url=http://m"+onestr.split('<a href="http://www').elementAt(1)
               .split('" target="_blank"')
               .elementAt(0);
+          print(one.url+"12345");
           one.title = onestr.split('target="_blank" title="').elementAt(1)
               .split('">')
               .elementAt(0);

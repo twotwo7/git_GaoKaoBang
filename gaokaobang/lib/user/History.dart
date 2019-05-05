@@ -20,34 +20,36 @@ class History extends StatefulWidget {
 class HistoryState extends State<History> {
   //List<OneNew> newsList = new List();
   List<Map> newsList = new List();
+  SqlHelper sqlhelper=new SqlHelper();
   final _biggerFont = const TextStyle(fontSize: 18.0);
   bool isReadyDownLoad=true;
   @override
   void deleteall() async{
-    SqlHelper sqlhelper=new SqlHelper();
-    var databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, 'history.db');
-    String SqlCreate='CREATE TABLE IF NOT EXISTS News (id INTEGER PRIMARY KEY, url TEXT, title TEXT, date TEXT)';
-    await sqlhelper.open(path, SqlCreate);
+    //SqlHelper sqlhelper=new SqlHelper();
+    //var databasesPath = await getDatabasesPath();
+    //String path = join(databasesPath, 'history.db');
+    //String SqlCreate='CREATE TABLE IF NOT EXISTS News (id INTEGER PRIMARY KEY, url TEXT, title TEXT, date TEXT)';
+   // await sqlhelper.open(path, SqlCreate);
     String SqlDeleteAll='Delete * FROM News';
     int count = await sqlhelper.db.delete("News");
+    //sqlhelper.close();
     print(count);
     setState(() {
-      newsList.clear();
+      newsList=newsList.sublist(0);
     });
   }
   @override
   void initlist() async{
     //String SqlQuery='SELECT * FROM News';
     //newsList =await sqlhelper.query(path,SqlQuery);
-    SqlHelper sqlhelper=new SqlHelper();
+    //SqlHelper sqlhelper=new SqlHelper();
     var databasesPath = await getDatabasesPath();
     String path = join(databasesPath, 'history.db');
     String SqlCreate='CREATE TABLE IF NOT EXISTS News (id INTEGER PRIMARY KEY, url TEXT, title TEXT, date TEXT)';
     await sqlhelper.open(path, SqlCreate);
     String SqlQuery='SELECT * FROM News';
     List<Map> list =await sqlhelper.query(path,SqlQuery);
-    sqlhelper.close();
+    //sqlhelper.close();
     setState(() {
       newsList = list;
     });
@@ -114,5 +116,10 @@ class HistoryState extends State<History> {
         this.context,
         new MaterialPageRoute(
             builder: (context) => new NewsWebPage(onenew.url, onenew.title)));
+  }
+  @override
+  void dispose(){
+    super.dispose();
+    sqlhelper.close();
   }
 }

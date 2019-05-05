@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gaokaobang/user/History.dart';
 
 class userPage extends StatefulWidget {
   @override
@@ -12,6 +13,13 @@ class userPage extends StatefulWidget {
 class Page extends State<userPage> {
   String noteStr="记录下你每天的奋斗心情";
   final TextEditingController _noteController = new TextEditingController();
+  clickHistory() {
+    print("H");
+    Navigator.push(
+      context,
+      new MaterialPageRoute(builder: (context) => new History()),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return layout(context);
@@ -66,9 +74,10 @@ class Page extends State<userPage> {
                 spacing: 2.0, // gap between adjacent chips
                 runSpacing: 2.0, // gap between lines
                 children: <Widget>[
-                  //分享应用
+                  //历史记录
                   new Card(
                     child: new Container(height: cardWidth, width: cardWidth,
+                      child: new MaterialButton(
                         child: new Center(
                             child: new Column(
                               children: <Widget>[
@@ -77,13 +86,16 @@ class Page extends State<userPage> {
                                   child: new Image.asset("images/talk.png"),
                                   width: cardWidth / 2,
                                   height: cardWidth / 2,),
-                                new Text("分享应用", style: TextStyle(fontSize: 10,
+                                new Text("历史记录", style: TextStyle(fontSize: 10,
                                     color: Colors.black,
                                     fontWeight: FontWeight.w900))
                               ],
                             )
-                        )
-                    ),),
+                        ),
+                        onPressed: clickHistory,
+                      ),
+                    ),
+                  ),
                   //奋斗心情,点击在底部弹出输入框
                   new Card(
                     child: new Container(height: cardWidth, width: cardWidth,

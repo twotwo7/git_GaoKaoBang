@@ -18,7 +18,13 @@ class SqlHelper{
           await db.execute(SqlCreate);
         });
   }
-  /*
+
+/*Future create(String path,String SqlCreate) async{
+    db = await openDatabase(path);
+    await db.execute(SqlCreate);
+    db.close();
+  }
+
   String tablename='Test';
    var valuesmap = <String, dynamic>{
       'name': 'hehao',
@@ -26,7 +32,11 @@ class SqlHelper{
       'num':456.789
     };
   * */
-  Future<int> insert(String tablename,Map<String,dynamic> valuesmap) async {
+  Future<int> insert(String path,String tablename,Map<String,dynamic> valuesmap) async {
+    String url = valuesmap["url"];
+    String SqlDelete = "DELETE FROM $tablename WHERE url = ?";
+    int count = await db.rawDelete(SqlDelete, ['$url']);
+    print(count);
     int id=-1;
     if(db==null)return id;
     id=await db.insert(tablename, valuesmap);
@@ -36,7 +46,7 @@ class SqlHelper{
   /*
   * SqlQuery='SELECT * FROM Test';
   * */
-  Future<List> query(String SqlQuery) async{
+  Future<List> query(String path,String SqlQuery) async{
     List<Map> list = await db.rawQuery(SqlQuery);
     return list;
   }
