@@ -13,11 +13,11 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:gaokaobang/tools/SqlHelper.dart';
 
-class History extends StatefulWidget {
+class noteHistory extends StatefulWidget {
   @override
-  createState() => new HistoryState();
+  createState() => new noteHistoryState();
 }
-class HistoryState extends State<History> {
+class noteHistoryState extends State<noteHistory> {
   //List<OneNew> newsList = new List();
   List<Map> newsList = new List();
   SqlHelper sqlhelper=new SqlHelper();
@@ -62,7 +62,7 @@ class HistoryState extends State<History> {
     return /*Text(newsList.elementAt(0).toString());*/
       new Scaffold(
         appBar: new AppBar(
-          title: new Text('新闻历史纪录'),
+          title: new Text('便签历史纪录'),
 
           actions: <Widget>[
             new IconButton(icon: new Icon(Icons.delete_outline), onPressed:deleteall),

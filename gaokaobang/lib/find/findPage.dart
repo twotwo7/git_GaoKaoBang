@@ -32,6 +32,12 @@ class Page extends State<findPage> {
       body: new Container(
         //背景颜色
           //color: Color.fromRGBO(255, 246, 127, 100),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("images/userBG2.jpg"),
+              fit: BoxFit.cover,
+            ),
+          ),
           padding: const EdgeInsets.all(0),
           child: new Column(
             children: <Widget>[

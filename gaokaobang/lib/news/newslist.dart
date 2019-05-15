@@ -48,7 +48,16 @@ class getHomeListState extends State<getHomeList> {
         backgroundColor: Color.fromRGBO(0x57, 0xC3, 0xC2, 100),
         elevation: 0,
       ),
-      body: _buildSuggestions() ,
+      body:new Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("images/userBG2.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child:_buildSuggestions() ,
+      )
+
     );
   }
   Widget _buildSuggestions() {
@@ -60,7 +69,7 @@ class getHomeListState extends State<getHomeList> {
         itemBuilder: (context, i) {
           if (i == 0) return new Container(child:new SwiperPage(),height: 200,);//new CountDownPage();
           //分割线
-          if (i.isOdd) return new Divider();
+          if (i.isOdd) return new Divider(height: 0,color: Colors.black,);
 
           final index = i ~/ 2;
           if (index >= newsList.length && page < 100&&newsList.length>=10&&isReadyDownLoad) {
@@ -85,19 +94,27 @@ class getHomeListState extends State<getHomeList> {
 
   }
   Widget _buildRow(OneNew news) {
-    return new ListTile(
-      title: new Text(
-        news.title,
-        style: _biggerFont,
-      ),
-      trailing: new Text(news.date),
-      onTap: () {
-        setState(
-              () {
-            clicknews(news);
-          },
-        );
-      },
+    return Opacity(
+      opacity: 0.9,
+        child:new Container(
+          //height: 100,
+          padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+          color: Colors.white,
+          child:new ListTile(
+            title: new Text(
+              news.title,
+              style: _biggerFont,
+            ),
+            trailing: new Text(news.date),
+            onTap: () {
+              setState(
+                    () {
+                  clicknews(news);
+                },
+              );
+            },
+          ),
+        ) ,
     );
   }
   void clicknews(OneNew onenew) {
@@ -252,6 +269,7 @@ class NewsWebPageState extends State<NewsWebPage>{
       key: scaffoldKey,
       url:news_url, // 登录的URL
       appBar: new AppBar(
+        backgroundColor: Color.fromRGBO(0x57, 0xC3, 0xC2, 100),
         title: new Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: titleContent,
@@ -348,9 +366,7 @@ class SwiperPageState extends State<SwiperPage> {
   }
 
   Widget _swiperBuilder(BuildContext context, int index) {
-    return (Image.network(
-      "http://via.placeholder.com/350x150",
-      fit: BoxFit.fill,
-    ));
+    var imagePath=['images/lunbo1.jpg','images/lunbo2.jpg','images/lunbo1.jpg'];
+    return new Image(image: new AssetImage(imagePath[index]));;
   }
 }

@@ -8,7 +8,7 @@ class TestScreen extends StatelessWidget {
       new Scaffold(
       appBar: new AppBar(
         title: new Text('性格测试'),
-        backgroundColor: Colors.brown,
+        backgroundColor: Color.fromRGBO(0x57, 0xC3, 0xC2, 100),
       ),
       body:
       new MaterialApp(

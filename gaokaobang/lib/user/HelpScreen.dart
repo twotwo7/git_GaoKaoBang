@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-class NoteScreen extends StatelessWidget {
+class HelpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -10,7 +10,7 @@ class NoteScreen extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: '高考须知'),
+      home: MyHomePage(title: '使用帮助'),
     );
   }
 }

@@ -34,6 +34,7 @@ class CollegeScreenState extends State<CollegeScreen> {
     return new Scaffold(
         resizeToAvoidBottomPadding: false, //输入框抵住键盘 内容不随键盘滚动
         appBar: new AppBar(
+          backgroundColor: Color.fromRGBO(0x57, 0xC3, 0xC2, 100),
           elevation: 1,
           title: new Text('高校推荐'),
           actions: <Widget>[
@@ -321,7 +322,7 @@ class SearchInputViewState extends State<SearchInputView> {
           shape: RoundedRectangleBorder(
               side: BorderSide.none,
               borderRadius: BorderRadius.all(Radius.circular(20))),
-          color: Colors.blue,
+          color: Color.fromRGBO(0x57, 0xC3, 0xC2, 100),
           textColor: Colors.white,
           child: new Text('点击立即查询高校'),
           onPressed: () {
