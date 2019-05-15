@@ -22,7 +22,7 @@ class MainPageWidget extends StatefulWidget {
 class MainPageState extends State<MainPageWidget> {
   int _tabIndex = 0;
   var tabImages;
-  var appBarTitles = ['资讯', '发现', '我的'];
+  var appBarTitles = ['发现','资讯',  '我的'];
   /*
    * 存放三个页面，跟fragmentList一样
    */
@@ -62,16 +62,18 @@ class MainPageState extends State<MainPageWidget> {
      * 初始化选中和未选中的icon
      */
     tabImages = [
-      [getTabImage('images/news.png'), getTabImage('images/news_selected.png')],
+
       [getTabImage('images/find.png'), getTabImage('images/find_selected.png')],
+      [getTabImage('images/news.png'), getTabImage('images/news_selected.png')],
       [getTabImage('images/user.png'), getTabImage('images/user_selected.png')]
     ];
     /*
      * 三个子界面
      */
     _pageList = [
-      new newsPage(),
+
       new findPage(),
+      new newsPage(),
       new userPage(),
     ];
   }
