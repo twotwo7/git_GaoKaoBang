@@ -1122,75 +1122,77 @@ class ResultListState extends State<ResultList> {
     return new Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        new Column(
-          children: <Widget>[
-            new Container(
-              width: MediaQuery.of(context).size.width,
-              child: new MaterialButton(
-                onPressed: ()
-                {
-                  clickcolleague("http://112.74.39.182:5001/clearColleague?url=http://m"+map['colleaguehref'].split('http://www').elementAt(1),map['colleague']);
-                },
-                child: new Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: new Text(map['colleague']),
+        new Card(
+          elevation: 10,
+          child: new Column(
+            children: <Widget>[
+              new Container(
+                width: MediaQuery.of(context).size.width,
+                child: new MaterialButton(
+                  onPressed: ()
+                  {
+                    clickcolleague("http://112.74.39.182:5001/clearColleague?url=http://m"+map['colleaguehref'].split('http://www').elementAt(1),map['colleague']);
+                  },
+                  child: new Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: new Text(map['colleague']),
+                  ),
                 ),
               ),
-            ),
-            new Container(
-              width: MediaQuery.of(context).size.width,
-              child: new MaterialButton(
-                onPressed: ()
-                {
-                  clickcolleague("http://112.74.39.182:5001/clearTime?url=http://m"+map['timehref'].split('http://www').elementAt(1),map['colleague']+"——招生时间");
-                },
-                child: new Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: new Text('招生时间:'+map['time']),
+              new Container(
+                width: MediaQuery.of(context).size.width,
+                child: new MaterialButton(
+                  onPressed: ()
+                  {
+                    clickcolleague("http://112.74.39.182:5001/clearTime?url=http://m"+map['timehref'].split('http://www').elementAt(1),map['colleague']+"——招生时间");
+                  },
+                  child: new Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: new Text('招生时间:'+map['time']),
+                  ),
                 ),
               ),
-            ),
-            new Container(
-              width: MediaQuery.of(context).size.width,
-              child: new MaterialButton(
-                onPressed: ()
-                {
-                  clickcolleague("http://112.74.39.182:5001/clearJianzhang?url=http://m"+map['jianzhang'].split('http://www').elementAt(1),map['colleague']+"——招生简章");
-                },
-                child: new Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: new Text('招生简章'),
+              new Container(
+                width: MediaQuery.of(context).size.width,
+                child: new MaterialButton(
+                  onPressed: ()
+                  {
+                    clickcolleague("http://112.74.39.182:5001/clearJianzhang?url=http://m"+map['jianzhang'].split('http://www').elementAt(1),map['colleague']+"——招生简章");
+                  },
+                  child: new Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: new Text('招生简章'),
+                  ),
                 ),
               ),
-            ),
-            new Container(
-              width: MediaQuery.of(context).size.width,
-              child: new MaterialButton(
-                onPressed: ()
-                {
-                  print("http://112.74.39.182:5001/clearCondition?url=http://m"+map['condition'].split('http://www').elementAt(1));
-                  clickcolleague("http://112.74.39.182:5001/clearCondition?url=http://m"+map['condition'].split('http://www').elementAt(1),map['colleague']+"——招生条件");
-                },
-                child: new Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: new Text('招生条件'),
+              new Container(
+                width: MediaQuery.of(context).size.width,
+                child: new MaterialButton(
+                  onPressed: ()
+                  {
+                    print("http://112.74.39.182:5001/clearCondition?url=http://m"+map['condition'].split('http://www').elementAt(1));
+                    clickcolleague("http://112.74.39.182:5001/clearCondition?url=http://m"+map['condition'].split('http://www').elementAt(1),map['colleague']+"——招生条件");
+                  },
+                  child: new Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: new Text('招生条件'),
+                  ),
                 ),
               ),
-            ),
-            new Container(
-              width: MediaQuery.of(context).size.width,
-              child: new MaterialButton(
-                onPressed: ()
-                {
-                  clickcolleague("http://112.74.39.182:5001/clearEntrance?url=http://m"+map['entrance'].split('http://www').elementAt(1),map['colleague']+"——招生入口");
-                },
-                child: new Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: new Text('入口'),
+              new Container(
+                width: MediaQuery.of(context).size.width,
+                child: new MaterialButton(
+                  onPressed: ()
+                  {
+                    clickcolleague("http://112.74.39.182:5001/clearEntrance?url=http://m"+map['entrance'].split('http://www').elementAt(1),map['colleague']+"——招生入口");
+                  },
+                  child: new Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: new Text('入口'),
+                  ),
                 ),
               ),
-            ),
-            /*new Container(
+              /*new Container(
               width: MediaQuery.of(context).size.width,
               child: new MaterialButton(
                 onPressed: ()
@@ -1203,8 +1205,10 @@ class ResultListState extends State<ResultList> {
                 ),
               ),
             ),*/
-          ],
+            ],
+          ),
         ),
+
       ],
     );
   }

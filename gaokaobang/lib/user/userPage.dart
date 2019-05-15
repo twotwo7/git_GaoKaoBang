@@ -11,7 +11,7 @@ class userPage extends StatefulWidget {
 }
 
 class Page extends State<userPage> {
-  String noteStr="记录下你每天的奋斗心情";
+  String noteStr="写下你的第一条便签吧！";
   final TextEditingController _noteController = new TextEditingController();
   clickHistory() {
     print("H");
@@ -129,7 +129,7 @@ class Page extends State<userPage> {
                                                   width: 5, //宽度为5
                                                 )),
                                             // errorText: "errorText",
-                                            hintText: '写下你今天的奋斗心情',
+                                            hintText: '写下便签',
                                           ),
                                         ),),
                                         //确认按钮
@@ -170,7 +170,7 @@ class Page extends State<userPage> {
                                     width: cardWidth / 2,
                                     height: cardWidth / 2,),
                                   new Text(
-                                      "奋斗心情", style: TextStyle(fontSize: 10,
+                                      "便签", style: TextStyle(fontSize: 10,
                                       color: Colors.black,
                                       fontWeight: FontWeight.w900))
                                 ],
@@ -189,7 +189,7 @@ class Page extends State<userPage> {
                                   child: new Image.asset("images/setup.png"),
                                   width: cardWidth / 2,
                                   height: cardWidth / 2,),
-                                new Text("设置", style: TextStyle(fontSize: 10,
+                                new Text("使用帮助", style: TextStyle(fontSize: 10,
                                     color: Colors.black,
                                     fontWeight: FontWeight.w900))
                               ],

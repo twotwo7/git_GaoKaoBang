@@ -11,7 +11,8 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:gaokaobang/tools/SqlHelper.dart';
-
+import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 /*SqlHelper sqlhelper=new SqlHelper();
 String path="";
 String tablename='News';
@@ -44,7 +45,7 @@ class getHomeListState extends State<getHomeList> {
     new Scaffold(
       appBar: new AppBar(
         title: new Text('高考帮'),
-        backgroundColor: Colors.green,
+        backgroundColor: Color.fromRGBO(0x57, 0xC3, 0xC2, 100),
         elevation: 0,
       ),
       body: _buildSuggestions() ,
@@ -57,7 +58,7 @@ class getHomeListState extends State<getHomeList> {
       return new ListView.builder(
         padding: const EdgeInsets.all(0),
         itemBuilder: (context, i) {
-          if (i == 0) return new CountDownPage();
+          if (i == 0) return new Container(child:new SwiperPage(),height: 200,);//new CountDownPage();
           //分割线
           if (i.isOdd) return new Divider();
 
@@ -297,17 +298,59 @@ class CountDownPageState extends State<CountDownPage>{
     //DateTime conutdownDayTime=new DateTime.fromMillisecondsSinceEpoch(conutdownTimestamp);
     int days=conutdownTimestamp~/(3600*24*1000);
     return new Container(
-      color: Colors.green,
-      height: MediaQuery.of(context).size.height*(1.8/5.0),
+      color: Color.fromRGBO(0x57, 0xC3, 0xC2, 100),
+      height: MediaQuery.of(context).size.height*(0.8/5.0),
       width: MediaQuery.of(context).size.width,
-      child: Column(
-        children: <Widget>[
-          new Container(height: MediaQuery.of(context).size.height*(1.0/18.0),),
-          new Text(days.toString(), style: TextStyle(fontSize: MediaQuery.of(context).size.width*(2.2/5.0),color: Colors.white,fontWeight: FontWeight.w900),),
-          new Text("高考倒计时", style: TextStyle(fontSize: 18.0, color: Colors.white,fontWeight: FontWeight.w700)
-          ),
-        ],
-      ),
+      child: new Container(
+        child: Column(
+          children: <Widget>[
+            //new Container(height: MediaQuery.of(context).size.height*(1.0/18.0),),
+            new Text(days.toString(), style: TextStyle(fontSize: MediaQuery.of(context).size.height*(0.5/5.0),color: Colors.white,fontWeight: FontWeight.w900),),
+            new Text("高考倒计时", style: TextStyle(fontSize: MediaQuery.of(context).size.height*(0.12/5.0), color: Colors.white,fontWeight: FontWeight.w700)
+            ),
+          ],
+        ) ,
+      )
+
     );
+  }
+}
+
+
+class SwiperPage extends StatefulWidget {
+  @override
+  SwiperPageState createState() {
+    return SwiperPageState();
+  }
+}
+
+class SwiperPageState extends State<SwiperPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 200.0,
+          child: Swiper(
+            itemBuilder: _swiperBuilder,
+            itemCount: 3,
+            pagination: new SwiperPagination(
+                builder: DotSwiperPaginationBuilder(
+                  color: Colors.black54,
+                  activeColor: Colors.white,
+                )),
+            control: new SwiperControl(),
+            scrollDirection: Axis.horizontal,
+            autoplay: true,
+            onTap: (index) => print('点击了第$index个'),
+          )),
+    );
+  }
+
+  Widget _swiperBuilder(BuildContext context, int index) {
+    return (Image.network(
+      "http://via.placeholder.com/350x150",
+      fit: BoxFit.fill,
+    ));
   }
 }

@@ -91,12 +91,12 @@ class zizhuState extends State<zizhu>{
 
   @override
   Widget build(BuildContext context) {
+
     List<Widget> titleContent = [];
-    titleContent.add(new Text(
-//      title,
-      this.title,
-      style: new TextStyle(color: Colors.white),
-    ));
+    titleContent.add(
+      Expanded(child: new Text(this.title, style: new TextStyle(color: Colors.white),) ,)
+
+    );
     if (loading) {
       // 如果还在加载中，就在标题栏上显示一个圆形进度条
       titleContent.add(new CupertinoActivityIndicator());

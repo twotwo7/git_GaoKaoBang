@@ -22,7 +22,7 @@ class MainPageWidget extends StatefulWidget {
 class MainPageState extends State<MainPageWidget> {
   int _tabIndex = 0;
   var tabImages;
-  var appBarTitles = ['首页', '发现', '我的'];
+  var appBarTitles = ['资讯', '发现', '我的'];
   /*
    * 存放三个页面，跟fragmentList一样
    */

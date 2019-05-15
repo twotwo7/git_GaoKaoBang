@@ -5,6 +5,7 @@ import 'package:gaokaobang/find/NoteScreen.dart';
 import 'package:gaokaobang/find/SearchScreen.dart';
 import 'package:gaokaobang/find/TestScreen.dart';
 import 'package:gaokaobang/find/ZizhuScreen.dart';
+import 'package:gaokaobang/news/newslist.dart';
 
 class findPage extends StatefulWidget {
   @override
@@ -25,10 +26,12 @@ class Page extends State<findPage> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('高考帮'),
-        backgroundColor: Colors.green,
+        backgroundColor: Color.fromRGBO(0x57, 0xC3, 0xC2, 100),
         elevation: 0,
       ),
       body: new Container(
+        //背景颜色
+          //color: Color.fromRGBO(255, 246, 127, 100),
           padding: const EdgeInsets.all(0),
           child: new Column(
             children: <Widget>[
@@ -51,7 +54,14 @@ class Page extends State<findPage> {
                   ],
                 ),
               ),*/
-              new morePage(),
+              new CountDownPage(),
+              Expanded(
+                child:new SingleChildScrollView(
+                  child:new morePage(),
+                ) ,
+              ),
+
+
             ],
           )),
     );
@@ -69,6 +79,13 @@ class morePage extends StatefulWidget {
 }
 
 class morePageState extends State<morePage> {
+  Color textColor=Color.fromRGBO(0x36, 0x29, 0x2F, 100);
+  Set<Color> cardColor={
+    Color.fromRGBO(0xEB, 0xDA, 0xCC, 100),
+    Color.fromRGBO(0xF5, 0xF9, 0xF1, 100),
+    Color.fromRGBO(0x8D, 0x91, 0xAA, 100),
+    Color.fromRGBO(0xDC, 0xE2, 0xEC, 100),
+  };
   clickZiZhu() {
     print("Z");
     Navigator.push(
@@ -348,13 +365,15 @@ class morePageState extends State<morePage> {
             ),*/
             //高校查询
             new Card(
-                elevation: 10,
+                color: cardColor.elementAt(0),
+                elevation: 1,
                 //color: Colors.green,
                 child: new MaterialButton(
                   minWidth: cardWidth,
                   height: cardHighet / 6,
                   onPressed: clickCollege,
                   child: new Container(
+
                     width: cardWidth,
                     height: cardHighet / 6,
                     child: new Row(
@@ -376,7 +395,7 @@ class morePageState extends State<morePage> {
                               padding: EdgeInsets.all(5.0),
                               child: new Text("高校查询",
                                   style: TextStyle(
-                                      color: Colors.grey,
+                                      color: textColor,
                                       fontSize: 30.0,
                                       fontWeight: FontWeight.w700)),
                             ),
@@ -389,7 +408,8 @@ class morePageState extends State<morePage> {
                 )),
             //自主招生
             new Card(
-                elevation: 10,
+                color: cardColor.elementAt(1),
+                elevation: 1,
                 //color: Colors.green,
                 child: new MaterialButton(
                     minWidth: cardWidth,
@@ -417,7 +437,7 @@ class morePageState extends State<morePage> {
                                 padding: EdgeInsets.all(5.0),
                                 child: new Text("自主招生",
                                     style: TextStyle(
-                                        color: Colors.grey,
+                                        color: textColor,
                                         fontSize: 30.0,
                                         fontWeight: FontWeight.w700)),
                               ),
@@ -429,7 +449,8 @@ class morePageState extends State<morePage> {
                     ))),
             //性格测试
             new Card(
-                elevation: 10,
+                color: cardColor.elementAt(2),
+                elevation: 1,
                 //color: Colors.green,
                 child: new MaterialButton(
                     minWidth: cardWidth,
@@ -457,7 +478,7 @@ class morePageState extends State<morePage> {
                                 padding: EdgeInsets.all(5.0),
                                 child: new Text("性格测试",
                                     style: TextStyle(
-                                        color: Colors.grey,
+                                        color:textColor,
                                         fontSize: 30.0,
                                         fontWeight: FontWeight.w700)),
                               ),
@@ -469,7 +490,8 @@ class morePageState extends State<morePage> {
                     ))),
             //高考须知
             new Card(
-              elevation: 10,
+              color: cardColor.elementAt(3),
+              elevation: 1,
               //color: Colors.green,
               child: new MaterialButton(
                   minWidth: cardWidth,
@@ -497,7 +519,7 @@ class morePageState extends State<morePage> {
                               padding: EdgeInsets.all(5.0),
                               child: new Text("高考须知",
                                   style: TextStyle(
-                                      color: Colors.grey,
+                                      color: textColor,
                                       fontSize: 30.0,
                                       fontWeight: FontWeight.w700)),
                             ),
