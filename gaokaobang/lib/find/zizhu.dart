@@ -107,6 +107,7 @@ class zizhuState extends State<zizhu>{
       key: scaffoldKey,
       url:news_url,//"http://112.74.39.182:5001/clickNew?url="+news_url, // 登录的URL
       appBar: new AppBar(
+        backgroundColor: Color.fromRGBO(0x57, 0xC3, 0xC2, 100),
         title: new Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: titleContent,
