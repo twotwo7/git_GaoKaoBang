@@ -156,7 +156,6 @@ class getHomeListState extends State<getHomeList> {
       http.Response response = await http.get(url);
       //此处的data为新闻列表的完整html
       String data = gbk.decode(response.bodyBytes);
-      print(data);
       //直接用字符串切割获得新闻的List
       List<String> tempList = data.split('<h2 class="h2_tit">');
       tempList.removeLast();
@@ -171,7 +170,6 @@ class getHomeListState extends State<getHomeList> {
           one.url = "http://112.74.39.182:5001/clickNew?url=http://m"+onestr.split('<a href="http://www').elementAt(1)
               .split('" target="_blank"')
               .elementAt(0);
-          print(one.url+"12345");
           one.title = onestr.split('target="_blank" title="').elementAt(1)
               .split('">')
               .elementAt(0);

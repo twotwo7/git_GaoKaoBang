@@ -340,6 +340,7 @@ class Page extends State<userPage> {
   clickNoteSubmit(){
     noteStr = _noteController.text
         .toString();
+    Navigator.pop(context);
     setState(() {});
   }
   //点击使用帮助

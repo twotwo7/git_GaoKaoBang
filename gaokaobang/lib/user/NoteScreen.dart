@@ -4,12 +4,12 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 
 
-class HelpScreen extends StatefulWidget {
+class NoteScreen extends StatefulWidget {
   @override
-  _HelpScreenState createState() => _HelpScreenState();
+  _NoteScreenState createState() => _NoteScreenState();
 }
 
-class _HelpScreenState extends State<HelpScreen> {
+class _NoteScreenState extends State<NoteScreen> {
   final str="                                                               ";
   var vlist = new List<bool>();
   String data;
@@ -26,14 +26,14 @@ class _HelpScreenState extends State<HelpScreen> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('使用帮助'),
+        title: new Text('高考须知'),
         backgroundColor: Color.fromRGBO(0x57, 0xC3, 0xC2, 100),
       ),
       body: new Center(
         child: FutureBuilder(
           future: DefaultAssetBundle.
           of(context).
-          loadString('data/shiYongBangZhu.json'),
+          loadString('data/gaoKaoXuZhi.json'),
           builder: (context,snapshot){
             // ignore: deprecated_member_use
             var mydata = json.decode(snapshot.data.toString());
