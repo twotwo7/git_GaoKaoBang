@@ -2,27 +2,13 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-class NoteScreen extends StatelessWidget {
+
+class NoteScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: '高考须知'),
-    );
-  }
+  NoteScreenState createState() => NoteScreenState();
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class NoteScreenState extends State<NoteScreen> {
   final str="                                                               ";
   var vlist = new List<bool>();
   String data;
@@ -39,7 +25,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(widget.title),
+        title: new Text("高考须知"),
         backgroundColor: Color.fromRGBO(0x57, 0xC3, 0xC2, 100),
       ),
       body: new Center(

@@ -2,6 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:gaokaobang/user/HelpScreen.dart';
 import 'package:gaokaobang/user/History.dart';
 import 'package:gaokaobang/user/noteHistory.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:gaokaobang/tools/SqlHelper.dart';
+import 'package:path/path.dart';
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'dart:ui';
+//import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:gaokaobang/tools/tools.dart';
+import 'package:http/http.dart' as http;
+import 'package:gbk2utf8/gbk2utf8.dart';
+import 'package:flutter/cupertino.dart';
 
 class userPage extends StatefulWidget {
   @override
@@ -15,16 +27,62 @@ class userPage extends StatefulWidget {
 class Page extends State<userPage> {
   String noteStr="记录每一刻心情,\n记录每一滴汗水,\n点击写下你的第一个便签吧！";
   final TextEditingController _noteController = new TextEditingController();
+
   clickHistory() {
     print("H");
     Navigator.push(
-      context,
+      this.context,
       new MaterialPageRoute(builder: (context) => new History()),
     );
   }
+  void insertlist() async{
+    //String SqlQuery='SELECT * FROM News';
+    //newsList =await sqlhelper.query(path,SqlQuery);
+    //SqlHelper sqlhelper=new SqlHelper();
+    SqlHelper sqlhelper1=new SqlHelper();
+    var databasesPath = await getDatabasesPath();
+    String path = join(databasesPath, 'Note1.db');
+    String SqlCreate='CREATE TABLE IF NOT EXISTS Note (id INTEGER PRIMARY KEY, text TEXT, data TEXT)';
+    await sqlhelper1.open(path, SqlCreate);
+    String tablename='Note';
+    DateTime now = new DateTime.now();
+    var valuesmap = <String, dynamic>{
+      'text': _noteController.text
+          .toString(),
+      'data':now.toString().substring(0,10),
+    };
+    int id=await sqlhelper1.insert1(path,tablename,valuesmap);
+    print(id);
+    String SqlQuery='SELECT * FROM Note';
+    List<Map> list =await sqlhelper1.query(path,SqlQuery);
+    print(list);
+    await sqlhelper1.close();
+  }
+  Future<String> initnote() async{
+    SqlHelper sqlhelper2=new SqlHelper();
+    var databasesPath = await getDatabasesPath();
+    String path = join(databasesPath, 'Note1.db');
+    String SqlCreate='CREATE TABLE IF NOT EXISTS Note (id INTEGER PRIMARY KEY, text TEXT, data TEXT)';
+    await sqlhelper2.open(path, SqlCreate);
+    String SqlQuery='SELECT * FROM Note';
+    List<Map> list =await sqlhelper2.query(path,SqlQuery);
+    if(list.length>0)
+    {return list[list.length-1]["text"];}
+    else return noteStr="记录每一刻心情,\n记录每一滴汗水,\n点击写下你的第一个便签吧！";
+  }
+  main() async {
+    String noteStr1=await initnote();noteStr=noteStr1;
+    setState(() {});
+  }
+  int iii=0;
   @override
   Widget build(BuildContext context) {
-    return layout(context);
+    if(iii==0){
+      main();
+      iii+=1;
+    }
+
+       return layout(context);
   }
 
   Widget layout(BuildContext context) {
@@ -243,6 +301,7 @@ class Page extends State<userPage> {
                                                                 '确认'),
                                                             onPressed: () {
                                                               clickNoteSubmit();
+                                                              insertlist();
                                                             }
                                                         ),
                                                       ),
@@ -332,7 +391,7 @@ class Page extends State<userPage> {
   clickNoteHistory(){
     print("NH");
     Navigator.push(
-      context,
+      this.context,
       new MaterialPageRoute(builder: (context) => new noteHistory()),
     );
   }
@@ -340,14 +399,14 @@ class Page extends State<userPage> {
   clickNoteSubmit(){
     noteStr = _noteController.text
         .toString();
-    Navigator.pop(context);
+    Navigator.pop(this.context);
     setState(() {});
   }
   //点击使用帮助
   clickHelp(){
     print("HELP");
     Navigator.push(
-      context,
+      this.context,
       new MaterialPageRoute(builder: (context) => new HelpScreen()),
     );
   }

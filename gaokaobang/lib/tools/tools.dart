@@ -166,3 +166,19 @@ class OneNew{
     return "url:"+url+"\ntitle:"+title+"\ndate:"+date+"\n";
   }
 }
+class OneNote{
+  int id;
+  String text;
+  String date;
+  OneNote(int i,String t,String d){
+    id=i;
+    text=t;
+    date=d;
+  }
+  @override
+  String toString() {
+    // TODO: implement toString
+    return "id:"+id.toString()+"\ntitle:"+text+"\ndate:"+date+"\n";
+  }
+
+}

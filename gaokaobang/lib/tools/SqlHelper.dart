@@ -42,6 +42,11 @@ class SqlHelper{
     id=await db.insert(tablename, valuesmap);
     return id;
   }
+  Future<int> insert1(String path,String tablename,Map<String,dynamic> valuesmap) async {
+    int id=-1;
+    id=await db.insert(tablename, valuesmap);
+    return id;
+  }
 
   /*
   * SqlQuery='SELECT * FROM Test';

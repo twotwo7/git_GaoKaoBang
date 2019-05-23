@@ -18,9 +18,7 @@ class _HelpScreenState extends State<HelpScreen> {
       this.vlist[index]=!this.vlist[index];
     });
   }
-  Future<String> loadAsset() async {
-    return await rootBundle.loadString('data/gaoKaoXuZhi.json');
-  }
+
   //List data;
   @override
   Widget build(BuildContext context) {

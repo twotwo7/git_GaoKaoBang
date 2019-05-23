@@ -65,7 +65,35 @@ class HistoryState extends State<History> {
           title: new Text('新闻历史纪录'),
 
           actions: <Widget>[
-            new IconButton(icon: new Icon(Icons.delete_outline), onPressed:deleteall),
+            new IconButton(icon: new Icon(Icons.delete_outline),
+                onPressed: () {
+                  showDialog<Null>(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context) {
+                      return new AlertDialog(
+                        title: new Text('确认删除所有浏览器历史吗？'),
+                        actions: <Widget>[
+                          new FlatButton(
+                            child: new Text('取消'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          new FlatButton(
+                            child: new Text('确定'),
+                            onPressed: () {
+                              deleteall();
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  ).then((val) {
+                    print(val);
+                  });
+                }),
           ],
           backgroundColor: Color.fromRGBO(0x57, 0xC3, 0xC2, 100),
           elevation: 0,
